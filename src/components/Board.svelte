@@ -1,11 +1,5 @@
 <script lang="ts">
-  import { board, gameState, ownTurn, pieceSelected } from '../stores/game.store';
-  import { sendState } from '../stores/websocket.store';
-
-  function placePiece(x: number, y: number) {
-    gameState.playPiece(x, y);
-    sendState();
-  }
+  import { board, gameState, pieceSelected } from '../stores/game.store';
 </script>
 
 <style>
@@ -48,14 +42,14 @@
       <div
         class="bg-blue-50 border border-black cell"
         class:bg-blue-300={(i + j) % 2 === 1}
-        class:selectable={$ownTurn && $pieceSelected != null && piece == null}
+        class:selectable={$pieceSelected != null && piece == null}
       >
         {#if piece != null}
           <div class="w-full h-full flex justify-center items-center">
             <img class="piece" src={`./assets/pieces/${piece}.svg`} alt={piece.toUpperCase()} />
           </div>
         {:else}
-          <div class="w-full h-full" on:click={() => placePiece(i, j)} />
+          <div class="w-full h-full" on:click={() => gameState.playPiece(i, j)} />
         {/if}
       </div>
     {/each}

@@ -1,13 +1,7 @@
-<script>
+<script lang="ts">
   import Button from 'smelte/src/components/Button';
 
-  import { gameState, ownTurn } from '../stores/game.store';
-  import { declareWin, sendState, winDeclarationWS } from '../stores/websocket.store';
-
-  function finish() {
-    gameState.finish();
-    sendState();
-  }
+  import { gameState } from '../stores/game.store';
 </script>
 
 <style>
@@ -23,6 +17,5 @@
 </style>
 
 <div class="flex flex-col justify-center items-center space-y-4 content">
-  <Button light block on:click={declareWin} disabled={!$ownTurn}>Win</Button>
-  <Button light block on:click={finish} disabled={!$winDeclarationWS}>Concede</Button>
+  <Button light block on:click={gameState.restart}>Restart</Button>
 </div>

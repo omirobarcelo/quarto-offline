@@ -4,7 +4,6 @@ import type { GameState } from '../data/game-state.interface';
 import { Piece } from '../data/piece.enum';
 
 const INITIAL_STATE: GameState = {
-  turn: 0,
   board: [
     [null, null, null, null],
     [null, null, null, null],
@@ -12,11 +11,8 @@ const INITIAL_STATE: GameState = {
     [null, null, null, null]
   ],
   piecesLeft: Object.values(Piece),
-  pieceSelected: null,
-  finished: false
+  pieceSelected: null
 };
-
-let _player: number;
 
 function initGameState() {
   const { subscribe, set, update } = writable(INITIAL_STATE);
@@ -29,8 +25,7 @@ function initGameState() {
       update((state) => ({
         ...state,
         pieceSelected: piece,
-        piecesLeft: state.piecesLeft.filter((p) => p !== piece),
-        turn: state.turn + 1
+        piecesLeft: state.piecesLeft.filter((p) => p !== piece)
       })),
     playPiece: (x: number, y: number) =>
       update((state) => ({
@@ -48,14 +43,6 @@ function initGameState() {
 
 export const gameState = initGameState();
 
-export const setPlayer = (player: number) => (_player = player);
-export const getPlayer = () => _player;
-
-// When first player joins, the game state is set before _player is set, causing $ownTurn to be false
-// when the second player joins the state is broadcasted, also updating ownTurn
-export const ownTurn = derived(gameState, ({ turn }) => turn % 2 === _player);
-
 export const board = derived(gameState, ({ board }) => board);
 export const piecesLeft = derived(gameState, ({ piecesLeft }) => piecesLeft);
 export const pieceSelected = derived(gameState, ({ pieceSelected }) => pieceSelected);
-export const finished = derived(gameState, ({ finished }) => finished);

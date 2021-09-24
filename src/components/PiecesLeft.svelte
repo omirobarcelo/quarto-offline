@@ -1,16 +1,14 @@
 <script lang="ts">
   import { Piece } from '../data/piece.enum';
-  import { gameState, ownTurn, pieceSelected, piecesLeft } from '../stores/game.store';
-  import { sendState } from '../stores/websocket.store';
+  import { gameState, pieceSelected, piecesLeft } from '../stores/game.store';
 
   const pieces = Object.values(Piece);
 
-  $: selectable = $ownTurn && $pieceSelected == null;
+  $: selectable = $pieceSelected == null;
 
   function selectPiece(piece: Piece) {
     if (selectable) {
       gameState.selectPiece(piece);
-      sendState();
     }
   }
 </script>

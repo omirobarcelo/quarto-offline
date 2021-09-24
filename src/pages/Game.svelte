@@ -1,18 +1,8 @@
 <script lang="ts">
-  import Button from 'smelte/src/components/Button';
-
   import Board from '../components/Board.svelte';
   import EndGameActions from '../components/EndGameActions.svelte';
-  import EndGameDialog from '../components/EndGameDialog.svelte';
   import PiecesLeft from '../components/PiecesLeft.svelte';
   import SelectedPiece from '../components/SelectedPiece.svelte';
-  import { WSKind } from '../data/websocket-kind.enum';
-  import { finished } from '../stores/game.store';
-  import { errorWS, join } from '../stores/websocket.store';
-
-  export let roomKey: string;
-
-  join(roomKey);
 </script>
 
 <style>
@@ -48,34 +38,22 @@
   }
 </style>
 
-{#if $errorWS?.kind === WSKind.Join}
-  <div class="mt-32">
-    <h4>There seems to have been some error</h4>
-    <p class="mt-8">{$errorWS.error.msg}</p>
-    <Button light class="mt-4" href="/">Go Back</Button>
-  </div>
-{:else}
-  <header class="w-full bg-blue-500 rounded flex justify-center items-center text-gray-50 text-lg font-medium header">
-    Game {roomKey}
-  </header>
-  <div class="flex content">
-    <div class="h-full p-2 flex flex-col items-center selected-piece-area">
-      <div class="mt-4">
-        <SelectedPiece />
-      </div>
-      <div class="w-full flex justify-center items-center end-game-actions-area">
-        <EndGameActions />
-      </div>
+<header class="w-full bg-blue-500 rounded flex justify-center items-center text-gray-50 text-lg font-medium header">
+  Quarto Offline
+</header>
+<div class="flex content">
+  <div class="h-full p-2 flex flex-col items-center selected-piece-area">
+    <div class="mt-4">
+      <SelectedPiece />
     </div>
-    <div class="h-full p-2 flex justify-center items-center board-area">
-      <Board />
-    </div>
-    <div class="h-full p-2 pieces-left-area">
-      <PiecesLeft />
+    <div class="w-full flex justify-center items-center end-game-actions-area">
+      <EndGameActions />
     </div>
   </div>
-
-  {#if $finished}
-    <EndGameDialog />
-  {/if}
-{/if}
+  <div class="h-full p-2 flex justify-center items-center board-area">
+    <Board />
+  </div>
+  <div class="h-full p-2 pieces-left-area">
+    <PiecesLeft />
+  </div>
+</div>

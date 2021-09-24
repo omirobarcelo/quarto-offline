@@ -1,5 +1,5 @@
-<script>
-  import { ownTurn, pieceSelected } from '../stores/game.store';
+<script lang="ts">
+  import { pieceSelected } from '../stores/game.store';
 </script>
 
 <style>
@@ -29,7 +29,5 @@
 </div>
 
 <p class="h-4 mt-2 text-lg">
-  {#if $pieceSelected != null}
-    {$ownTurn ? 'Your' : `Opponent's`} piece
-  {/if}
+  {$pieceSelected != null ? 'Your' : 'Choose a'} piece
 </p>

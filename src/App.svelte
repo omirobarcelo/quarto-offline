@@ -1,14 +1,7 @@
 <script lang="ts">
   import 'smelte/src/tailwind.css';
-  import { onDestroy } from 'svelte';
 
-  import Entry from './pages/Entry.svelte';
   import Game from './pages/Game.svelte';
-
-  let hash = window.location.hash;
-  const updateHash = () => (hash = window.location.hash);
-  window.addEventListener('hashchange', updateHash);
-  onDestroy(() => window.removeEventListener('hashchange', updateHash));
 </script>
 
 <style>
@@ -22,9 +15,5 @@
 </style>
 
 <main>
-  {#if !hash}
-    <Entry />
-  {:else}
-    <Game roomKey={hash.slice(1)} />
-  {/if}
+  <Game />
 </main>
